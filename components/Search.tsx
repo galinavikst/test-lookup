@@ -24,7 +24,7 @@ export default function Search({ onInputChange }: SearchProps) {
       }}
     >
       <InputBase
-        onChange={(e) => onInputChange(e.target.value)}
+        onChange={(e) => onInputChange(e.target.value.toLocaleLowerCase())}
         sx={{ ml: 1, flex: 1, color: "inherit" }}
         placeholder="Type here..."
       />

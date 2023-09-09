@@ -29,7 +29,11 @@ export default function ModalCard({
       <Paper className="p-5 relative">
         <IconButton
           onClick={handleModalClose}
-          className="absolute -top-1/4 sm:right-[-35px] right-[-15px]"
+          sx={{
+            position: "absolute",
+            top: "-25%",
+            right: { sm: -35, xs: -13 },
+          }}
         >
           <CloseIcon className="text-cyan-400" />
         </IconButton>

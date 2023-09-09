@@ -60,12 +60,18 @@ export default function CardList({ inputValue }: CardListProps) {
   return (
     inputValue !== "" &&
     cards !== null && (
-      <List className="flex mb-10 md:mb-5 flex-wrap gap-5 justify-center">
+      <List
+        sx={{
+          mb: { xs: 5, sm: 0 },
+        }}
+        className="flex flex-wrap gap-5 justify-center"
+      >
         {cards.map((obj) => (
           <ListItem
             key={obj.id}
             onClick={() => handleModalOpen(obj.id)}
-            className="py-2.5 px-5 w-fit text-cyan-400 border-2 border-cyan-400 rounded card"
+            sx={{ width: "fit-content" }}
+            className="py-2.5 px-5 text-cyan-400 border-2 border-cyan-400 rounded card"
           >
             <Typography variant="button">
               {obj.first_name + " " + obj.last_name}
