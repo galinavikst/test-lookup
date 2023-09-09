@@ -16,7 +16,7 @@ export default function Search({ onInputChange }: SearchProps) {
         display: "flex",
         alignItems: "center",
         width: "40%",
-        minWidth: 280,
+        minWidth: 265,
         m: "30px auto",
         background: "transparent",
         border: "1px solid #fff",

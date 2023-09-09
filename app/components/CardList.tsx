@@ -1,12 +1,14 @@
 "use client";
 import { List, ListItem, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import ModalCard from "./ModalCard";
 
 export interface SearchResponse {
   id: number;
   first_name: string;
   last_name: string;
   email: string;
+  gender: string;
 }
 
 interface CardListProps {
@@ -16,6 +18,13 @@ interface CardListProps {
 export default function CardList({ inputValue }: CardListProps) {
   const [jsonData, setJsonData] = useState<SearchResponse[] | null>(null);
   const [cards, setCards] = useState<SearchResponse[] | null>(null);
+  const [openModalId, setOpenModalId] = React.useState<number | null>(null);
+
+  const handleModalOpen = (id: number) => setOpenModalId(id);
+  const handleModalClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setOpenModalId(null);
+  };
 
   useEffect(() => {
     async function fetchData() {
@@ -51,18 +60,24 @@ export default function CardList({ inputValue }: CardListProps) {
   return (
     inputValue !== "" &&
     cards !== null && (
-      <List className="flex flex-wrap gap-5 justify-center">
+      <List className="flex mb-10 md:mb-5 flex-wrap gap-5 justify-center">
         {cards.map((obj) => (
           <ListItem
             key={obj.id}
+            onClick={() => handleModalOpen(obj.id)}
             className="py-2.5 px-5 w-fit text-cyan-400 border-2 border-cyan-400 rounded card"
           >
             <Typography variant="button">
               {obj.first_name + " " + obj.last_name}
             </Typography>
+            <ModalCard
+              obj={obj}
+              openModal={openModalId}
+              handleModalClose={handleModalClose}
+            />
           </ListItem>
         ))}
-        {!jsonData && <div>Loading...</div>}
+        {!jsonData && <ListItem>Loading...</ListItem>}
       </List>
     )
   );

@@ -4,6 +4,7 @@ import Image from "next/image";
 import CardList from "./components/CardList";
 import Search from "./components/Search";
 import { useState } from "react";
+import ModalCard from "./components/ModalCard";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState<string | null>(null);
@@ -12,7 +13,7 @@ export default function Home() {
   };
 
   return (
-    <main className="min-h-screen p-10 relative">
+    <main className="min-h-screen sm:p-10 p-2 relative">
       <Container className="">
         <Box className="flex gap-5 justify-center">
           <Image
@@ -28,8 +29,8 @@ export default function Home() {
         </Box>
         <Search onInputChange={handleInputChange} />
         <CardList inputValue={inputValue} />
-        <Typography className="absolute right-[50%] translate-x-1/2 -translate-y-1/2 opacity-50 bottom-1">
-          DataBase from{" "}
+        <Typography className="absolute w-full flex justify-center right-[50%] translate-x-1/2 -translate-y-1/2 opacity-50 bottom-1">
+          DataBase from{"\u00A0"}
           <Link target="a_blank" href="https://www.mockaroo.com/">
             Mockaroo
           </Link>
