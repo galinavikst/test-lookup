@@ -1,10 +1,9 @@
 "use client";
 import { Box, Container, Link, Typography } from "@mui/material";
 import Image from "next/image";
-import CardList from "./components/CardList";
-import Search from "./components/Search";
+import CardList from "../components/CardList";
+import Search from "../components/Search";
 import { useState } from "react";
-import ModalCard from "./components/ModalCard";
 
 export default function Home() {
   const [inputValue, setInputValue] = useState<string | null>(null);
