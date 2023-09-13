@@ -68,7 +68,7 @@ export default function CardList({ inputValue }: CardListProps) {
           scale: 1,
           ease: "power1.inOut",
           stagger: {
-            each: 0.01,
+            each: 0.03,
             from: "random",
           },
         });
@@ -78,7 +78,8 @@ export default function CardList({ inputValue }: CardListProps) {
   }, [cards]);
 
   return (
-    inputValue !== "" &&
+    //inputValue !== '' &&
+    (inputValue as string)?.length > 1 &&
     cards !== null && (
       <List
         sx={{
