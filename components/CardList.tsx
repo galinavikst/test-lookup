@@ -1,8 +1,8 @@
 "use client";
 import { List, ListItem, Typography } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ModalCard from "./ModalCard";
-
+import gsap from "gsap";
 export interface SearchResponse {
   id: number;
   first_name: string;
@@ -19,6 +19,8 @@ export default function CardList({ inputValue }: CardListProps) {
   const [jsonData, setJsonData] = useState<SearchResponse[] | null>(null);
   const [cards, setCards] = useState<SearchResponse[] | null>(null);
   const [openModalId, setOpenModalId] = React.useState<number | null>(null);
+  // const itemRefs = useRef([]);
+  // itemRefs.current = [];
 
   const handleModalOpen = (id: number) => setOpenModalId(id);
   const handleModalClose = (e: React.MouseEvent) => {
@@ -51,14 +53,33 @@ export default function CardList({ inputValue }: CardListProps) {
             obj.first_name.toLowerCase().includes(inputValue) ||
             obj.last_name.toLowerCase().includes(inputValue)
         );
-
         setCards(filteredData);
       }
     }
-  }, [inputValue]);
+  }, [inputValue, jsonData]);
+
+  // gsap animation
+  useEffect(() => {
+    const ctx = gsap.context(() => {});
+    if (cards !== null) {
+      ctx.add(() => {
+        gsap.to(".card", {
+          opacity: 1,
+          scale: 1,
+          ease: "power1.inOut",
+          stagger: {
+            each: 0.03,
+            from: "random",
+          },
+        });
+      });
+    }
+    return () => ctx.revert();
+  }, [cards]);
 
   return (
-    inputValue !== "" &&
+    //inputValue !== '' &&
+    (inputValue as string)?.length > 1 &&
     cards !== null && (
       <List
         sx={{
@@ -66,11 +87,15 @@ export default function CardList({ inputValue }: CardListProps) {
         }}
         className="flex flex-wrap gap-5 justify-center"
       >
-        {cards.map((obj) => (
+        {cards.map((obj, index) => (
           <ListItem
             key={obj.id}
             onClick={() => handleModalOpen(obj.id)}
-            sx={{ width: "fit-content" }}
+            sx={{
+              width: "fit-content",
+              opacity: 0,
+              transform: `scale(${index % 2 === 0 ? 0.5 : 1.5})`,
+            }}
             className="py-2.5 px-5 text-cyan-400 border-2 border-cyan-400 rounded card"
           >
             <Typography variant="button">
